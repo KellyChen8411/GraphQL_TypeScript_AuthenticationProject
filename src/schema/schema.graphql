@@ -7,12 +7,11 @@ type User {
 }
 
 type Query {
-    project: String!
+    me: User!
 }
 
 type Mutation{
     login(userInput: UserInput): String!
-    me: User!
 }
 
 input UserInput {

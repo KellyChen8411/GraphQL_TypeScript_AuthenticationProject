@@ -25,14 +25,19 @@ const users: UserInfo[] = [
 
 export const resolvers = {
     Query: {
-        project: (): string  => {
-        return 'GraphQL_TypeScript_AuthenticationProject';
-      }
+        me: (parent: undefined, args: null, context: {user: UserInfo}): UserInfo => {
+            const userInfo = context.user;
+            if(userInfo){
+                return userInfo;
+            }else{
+                throw new Error('You are not authenticated!');
+            }
+        }
     },
     Mutation: {
         login: (parent: undefined, args: {userInput: UserInfo}): string => {
             const userinfo: UserInfo = args.userInput;
-            const { account, password, name }:  UserInfo = userinfo;
+            const { account, password }:  UserInfo = userinfo;
             const userIndex: number = users.findIndex((user) => user.account === account);
             
             if(userIndex === -1){
@@ -44,14 +49,6 @@ export const resolvers = {
             }
             const token: string = jwt.sign(users[userIndex], 'shhhhh');
             return token;
-        },
-        me: (parent: undefined, args: null, context: {user: UserInfo}): UserInfo => {
-            const userInfo = context.user;
-            if(userInfo){
-                return userInfo;
-            }else{
-                throw new Error('You are not authenticated!');
-            }
         }
     }
   }
