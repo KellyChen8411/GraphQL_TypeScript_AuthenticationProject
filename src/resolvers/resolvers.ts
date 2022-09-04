@@ -25,8 +25,8 @@ const users: UserInfo[] = [
 
 export const resolvers = {
     Query: {
-      users: (): UserInfo[]  => {
-        return users;
+        project: (): string  => {
+        return 'GraphQL_TypeScript_AuthenticationProject';
       }
     },
     Mutation: {
