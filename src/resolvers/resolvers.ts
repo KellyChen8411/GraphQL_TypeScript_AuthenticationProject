@@ -35,20 +35,20 @@ export const resolvers = {
         }
     },
     Mutation: {
-        login: (parent: undefined, args: {userInput: UserInfo}): string => {
+        login: (parent: undefined, args: {userInput: UserInfo}): {token: string} => {
             const userinfo: UserInfo = args.userInput;
             const { account, password }:  UserInfo = userinfo;
             const userIndex: number = users.findIndex((user) => user.account === account);
             
             if(userIndex === -1){
-                throw new Error('User is not exist!') 
+                throw new Error('User not exists!') 
             }
             const passwordHashed: string = users[userIndex].password;
             if(!bcrypt.compareSync(password, passwordHashed)){
                 throw new Error('Wrong password') 
             }
             const token: string = jwt.sign(users[userIndex], 'shhhhh');
-            return token;
+            return {token};
         }
     }
   }
