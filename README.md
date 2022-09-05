@@ -21,13 +21,13 @@
 - context中實現authorization (若有headers有帶token，userinfo會被assign入context user attribute 中)
   
 ### schema.graphql
-- 在User type中定義所需attribute
+- 在User type中定義所需fields
 - login API因有資料的update，將其定義在mutation中
-- me API定義在Query中，並指定期回傳data type為User type object
+- me API定義在Query中，並指定其回傳User object
 
 ### resolvers.ts
 定義schema中的field如何經過處裡並回傳
-1. mutation的login field
+1. mutation的login
 > - 先檢查User是否存在
 > - 比對password
 > - 重新產生token並回傳
@@ -109,7 +109,7 @@ mutation login {
 - **Type:** Query
 - **Request:**
 
-下方的attribute皆為optional，但至少需填一個
+下方的field皆為optional，但至少需填一個
 ```
 uery getUserInfo{
   me{
